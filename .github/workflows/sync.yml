@@ -99,8 +99,8 @@ jobs:
 
       - name: Sync collaborators to ${{ matrix.repo }}
         run: |
-          gh api -X PUT /repos/permutive-engineering/gcp-auth/collaborators/permutive-ci -f permission='admin'
-          gh api -X PUT /orgs/permutive-engineering/teams/developer-experience/repos/permutive-engineering/gcp-auth -f permission='admin' 
+          gh api -X PUT /repos/${{ matrix.repo }}/collaborators/permutive-ci -f permission='admin'
+          gh api -X PUT /orgs/permutive-engineering/teams/developer-experience/repos/${{ matrix.repo }} -f permission='admin' 
         env:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 
