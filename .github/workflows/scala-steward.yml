@@ -55,6 +55,12 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Run Coursier Setup Action
+        uses: coursier/setup-action@039f736548afa5411c1382f40a5bd9c2d30e0383 # v1.3.9
+        with:
+          jvm: liberica:${{ matrix.jdk }}
+          apps: sbt
         
       - name: Append extra options
         run: echo "${{ github.event.inputs.extra-options }}" >> .github/.scala-steward.conf
