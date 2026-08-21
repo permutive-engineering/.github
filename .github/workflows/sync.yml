@@ -77,7 +77,10 @@ jobs:
                     "context": "Run \"sbt ci-test\" on JDK 17"
                   },
                   {
-                    "context": "Run \"sbt ci-test\" on JDK 11"
+                    "context": "Run \"sbt ci-test\" on JDK 21"
+                  },
+                  {
+                    "context": "Run \"sbt ci-test\" on JDK 25"
                   }
                 ]
               },
