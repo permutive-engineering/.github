@@ -109,10 +109,25 @@ jobs:
 
       - name: Sync tag protection to ${{ matrix.repo }}
         run: |
-          has_protection=$(gh api /repos/${{ matrix.repo }}/tags/protection -q 'map(.pattern) | . as $f | "v*" | IN($f[])')
+          ruleset_name="Protect version tags"
+          has_ruleset=$(gh api /repos/${{ matrix.repo }}/rulesets -q 'map(.name) | . as $f | "'"$ruleset_name"'" | IN($f[])')
 
-          if [ "$has_protection" != "true" ]; then 
-            gh api -X POST /repos/${{ matrix.repo }}/tags/protection -f pattern='v*'
+          if [ "$has_ruleset" != "true" ]; then
+            gh api -X POST /repos/${{ matrix.repo }}/rulesets --input - <<< '{
+              "name": "'"$ruleset_name"'",
+              "target": "tag",
+              "enforcement": "active",
+              "conditions": {
+                "ref_name": {
+                  "include": ["refs/tags/v*"],
+                  "exclude": []
+                }
+              },
+              "rules": [
+                { "type": "deletion" },
+                { "type": "update" }
+              ]
+            }'
           fi
         env:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
