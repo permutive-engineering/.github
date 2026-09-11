@@ -59,7 +59,7 @@ jobs:
       - name: Run Coursier Setup Action
         uses: coursier/setup-action@9b7939bf01fd1185ce2babe16135168361bf2c62 # v3.0.2
         with:
-          jvm: liberica:${{ matrix.jdk }}
+          jvm: liberica:17
           apps: sbt
         
       - name: Append extra options
